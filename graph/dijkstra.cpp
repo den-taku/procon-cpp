@@ -40,14 +40,13 @@ class Dijkstra {
         std::vector<std::vector<Edge>> edges;
 
     public:
-        Dijkstra(size_t node);
+        Dijkstra(size_t nodes);
         void add_edge(size_t from, size_t to, unsigned int cost);
         std::vector<unsigned long> shortest_path(size_t start);
 };
 
-Dijkstra::Dijkstra(size_t node) {
-    nodes = node;
-    edges = std::vector<std::vector<Edge>>(node);
+Dijkstra::Dijkstra(size_t nodes) : nodes(nodes){
+    edges = std::vector<std::vector<Edge>>(nodes);
 }
 
 void Dijkstra::add_edge(size_t from, size_t to, unsigned int cost) {
