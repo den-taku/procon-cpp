@@ -6,8 +6,6 @@
 #include <queue>
 #include <string>
 
-typedef struct Edge Edge;
-
 class Edge {
     public:
         size_t to;
@@ -67,7 +65,6 @@ std::vector<unsigned long> Dijkstra::shortest_path(size_t start) {
     while (!heap.empty()) {
         auto state = heap.top();
         heap.pop();
-        // std::cout << '(' << state.cost << ',' << state.position << ')' << std::endl;
         if (state.cost > dist[state.position]) {
             continue;
         }
