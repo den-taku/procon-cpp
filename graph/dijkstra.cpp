@@ -1,4 +1,4 @@
-// Shortest Path (https://onlinejudge.u-aizu.ac.jp/courses/library/5/GRL/1/GRL_1_A): 00.24s
+// Shortest Path (https://onlinejudge.u-aizu.ac.jp/courses/library/5/GRL/1/GRL_1_A): 00.10s
 #include <cstddef>
 #include <climits>
 #include <iostream>
@@ -84,6 +84,9 @@ namespace dijkstra {
 
 int main() {
     using namespace std;
+
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
     // input
     size_t n;
