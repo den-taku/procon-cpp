@@ -4,7 +4,7 @@
 #include <optional>
 #include <algorithm>
 
-typedef std::tuple<size_t, size_t, unsigned long> edge_t;
+typedef std::tuple<size_t, size_t, unsigned long long> edge_t;
 
 bool operator<(const edge_t &a, const edge_t &b) { return std::get<2>(a) < std::get<2>(b);  }
 
@@ -36,7 +36,7 @@ namespace kruskal {
             } else {
                 auto represent = x;
                 do {
-                    represent = parent[x];
+                    represent = parent[represent];
                 } while (parent[represent] != represent);
                 parent[x] = represent;
                 return represent;
@@ -67,31 +67,31 @@ namespace kruskal {
     class Kruskal {
         private:
             size_t vertices;
-            std::vector<std::tuple<size_t, size_t, unsigned long>> edges;
+            std::vector<std::tuple<unsigned long long, size_t, size_t>> edges;
         public:
             Kruskal(size_t vertices);
-            void add_edge(size_t u, size_t v, unsigned long wight);
-            std::optional<unsigned long> minimum_spanning_tree();
+            void add_edge(size_t u, size_t v, unsigned long long wight);
+            std::optional<unsigned long long> minimum_spanning_tree();
     };
 
     Kruskal::Kruskal(size_t vertices) : vertices(vertices) {
-        edges = std::vector<std::tuple<size_t, size_t, unsigned long>>();
+        edges = std::vector<std::tuple<unsigned long long, size_t, size_t>>();
     }
 
-    void Kruskal::add_edge(size_t u, size_t v, unsigned long weight) {
-        edges.push_back(std::make_tuple(u, v, weight));
+    void Kruskal::add_edge(size_t u, size_t v, unsigned long long weight) {
+        edges.push_back(std::make_tuple(weight, u, v));
     }
 
-    std::optional<unsigned long> Kruskal::minimum_spanning_tree() {
+    std::optional<unsigned long long> Kruskal::minimum_spanning_tree() {
         auto uft = disjoint_set::DisjointSet(vertices);
-        std::sort(edges.begin(), edges.end(), [](const auto &a, const auto &b) { return std::get<2>(a) < std::get<2>(b); });
-    
-        unsigned long sum = 0;
-        unsigned long count = 0;
+        std::sort(edges.begin(), edges.end());
+
+        unsigned long long sum = 0;
+        unsigned long long count = 0;
         for (const auto &e : edges) {
-            auto u = std::get<0>(e);
-            auto v = std::get<1>(e);
-            auto w = std::get<2>(e);
+            auto u = std::get<1>(e);
+            auto v = std::get<2>(e);
+            auto w = std::get<0>(e);
 
             if (uft.same(u, v)) {
                 continue;
@@ -120,7 +120,7 @@ int main() {
 
     size_t n, m;
     size_t u, v;
-    unsigned long w;
+    unsigned long long w;
     cin >> n >> m;
 
     auto k = kruskal::Kruskal(n);
