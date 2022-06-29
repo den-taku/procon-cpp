@@ -1,4 +1,4 @@
 #!/bin/bash
 
-g++ --std=c++17 dijkstra.cpp
+g++ --std=c++17 kruskal.cpp
 ./a.out
