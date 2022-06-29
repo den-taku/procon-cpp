@@ -4,9 +4,7 @@
 #include <optional>
 #include <algorithm>
 
-typedef std::tuple<size_t, size_t, unsigned long long> edge_t;
-
-bool operator<(const edge_t &a, const edge_t &b) { return std::get<2>(a) < std::get<2>(b);  }
+typedef std::tuple<unsigned long long, size_t, size_t> edge_t;
 
 
 namespace kruskal {
@@ -67,7 +65,7 @@ namespace kruskal {
     class Kruskal {
         private:
             size_t vertices;
-            std::vector<std::tuple<unsigned long long, size_t, size_t>> edges;
+            std::vector<edge_t> edges;
         public:
             Kruskal(size_t vertices);
             void add_edge(size_t u, size_t v, unsigned long long wight);
@@ -75,7 +73,7 @@ namespace kruskal {
     };
 
     Kruskal::Kruskal(size_t vertices) : vertices(vertices) {
-        edges = std::vector<std::tuple<unsigned long long, size_t, size_t>>();
+        edges = std::vector<edge_t>();
     }
 
     void Kruskal::add_edge(size_t u, size_t v, unsigned long long weight) {
@@ -83,7 +81,7 @@ namespace kruskal {
     }
 
     std::optional<unsigned long long> Kruskal::minimum_spanning_tree() {
-        auto uft = disjoint_set::DisjointSet(vertices);
+        auto sets = disjoint_set::DisjointSet(vertices);
         std::sort(edges.begin(), edges.end());
 
         unsigned long long sum = 0;
@@ -93,11 +91,11 @@ namespace kruskal {
             auto v = std::get<2>(e);
             auto w = std::get<0>(e);
 
-            if (uft.same(u, v)) {
+            if (sets.same(u, v)) {
                 continue;
             }
 
-            uft.unite(u, v);
+            sets.unite(u, v);
             sum += w;
             count += 1;
             if (count == vertices - 1) {
